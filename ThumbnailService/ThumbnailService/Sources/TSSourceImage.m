@@ -28,7 +28,11 @@
     if (self) {
         imageURL = _imageURL;
         
-        NSString *pathToReplace = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]stringByDeletingLastPathComponent];
+        static NSString *pathToReplace;
+        
+        if (!pathToReplace) {
+            pathToReplace = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]stringByDeletingLastPathComponent];
+        }
         
         NSString *variablePath = [[imageURL absoluteString] stringByReplacingOccurrencesOfString:pathToReplace withString:@"/"];
         
