@@ -7,6 +7,7 @@
 //
 
 #import "TSSourceImage.h"
+#import "NSString+MD5.h"
 
 @implementation TSSourceImage {
     NSString *identifier;
@@ -26,7 +27,12 @@
     self = [super init];
     if (self) {
         imageURL = _imageURL;
-        identifier = [NSString stringWithFormat:@"%d", (unsigned int)[[imageURL absoluteString] hash]];
+        
+        NSString *pathToReplace = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]stringByDeletingLastPathComponent];
+        
+        NSString *variablePath = [[imageURL absoluteString] stringByReplacingOccurrencesOfString:pathToReplace withString:@"/"];
+        
+        identifier = [variablePath MD5Digest];
     }
     return self;
 }
