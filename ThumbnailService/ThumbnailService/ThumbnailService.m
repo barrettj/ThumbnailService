@@ -116,6 +116,13 @@
     return [thumbnailsCache objectExistsForKey:request.identifier mode:TSCacheManagerModeMemory];
 }
 
+- (UIImage*)memoryCachedThumbnailForRequest:(TSRequest*)request
+{
+    UIImage *thumbnail = [thumbnailsCache objectForKey:request.identifier mode:TSCacheManagerModeMemory];
+    
+    return thumbnail;
+}
+
 #pragma mark - Placeholder methods
 
 - (UIImage *)placeholderFromCacheForSource:(TSSource *)source
