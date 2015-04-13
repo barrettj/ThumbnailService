@@ -134,6 +134,8 @@ static NSString *kCacheExtensionObject = @"object";
 
 - (NSString *)filePathForKey:(NSString *)key extension:(NSString *)extension
 {
+    if (!extension) return nil;
+    
     return [[[self cacheDirectory] stringByAppendingPathComponent:key] stringByAppendingPathExtension:extension];
 }
 
