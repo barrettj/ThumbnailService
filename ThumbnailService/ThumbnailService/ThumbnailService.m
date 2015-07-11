@@ -401,4 +401,14 @@
     NSLog(@"ThumbnailService warning: %@", warningString);
 }
 
+#pragma mark - Add to Cache
+
+- (void)addThumbnailToCache:(UIImage*)thumbnail identifier:(NSString*)identifier {
+    [self addThumbnailToCache:thumbnail identifier:identifier mode:TSCacheManagerModeFileAndMemory];
+}
+
+- (void)addThumbnailToCache:(UIImage*)thumbnail identifier:(NSString*)identifier mode:(TSCacheManagerMode)mode {
+    [thumbnailsCache setObject:thumbnail forKey:identifier mode:mode];
+}
+
 @end

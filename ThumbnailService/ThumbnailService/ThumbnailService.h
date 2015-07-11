@@ -35,4 +35,7 @@
 - (void)setCachesName:(NSString *)cachesName;
 - (void)clearFileCache;
 
+- (void)addThumbnailToCache:(UIImage*)thumbnail identifier:(NSString*)identifier;
+//- (void)addThumbnailToCache:(UIImage*)thumbnail identifier:(NSString*)identifier mode:(TSCacheManagerMode)mode;
+
 @end
