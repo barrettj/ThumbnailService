@@ -14,4 +14,7 @@
 - (id)initWithImagePath:(NSString *)imagePath;
 - (id)initWithImageLocalURL:(NSURL *)imageURL;
 
++ (NSString*)identifierForURL:(NSURL*)imageURL;
+
+
 @end

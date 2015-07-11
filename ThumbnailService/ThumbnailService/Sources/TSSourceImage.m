@@ -15,6 +15,18 @@
     NSURL *imageURL;
 }
 
++ (NSString*)identifierForURL:(NSURL*)imageURL {
+    static NSString *pathToReplace;
+    
+    if (!pathToReplace) {
+        pathToReplace = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]stringByDeletingLastPathComponent];
+    }
+    
+    NSString *variablePath = [[imageURL absoluteString] stringByReplacingOccurrencesOfString:pathToReplace withString:@"/"];
+    
+    return [variablePath MD5Digest];
+}
+
 - (id)initWithImagePath:(NSString *)_imagePath
 {
     NSURL *url = [[NSURL alloc] initFileURLWithPath:_imagePath];
@@ -28,15 +40,7 @@
     if (self) {
         imageURL = _imageURL;
         
-        static NSString *pathToReplace;
-        
-        if (!pathToReplace) {
-            pathToReplace = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]stringByDeletingLastPathComponent];
-        }
-        
-        NSString *variablePath = [[imageURL absoluteString] stringByReplacingOccurrencesOfString:pathToReplace withString:@"/"];
-        
-        identifier = [variablePath MD5Digest];
+        identifier = [self.class identifierForURL:imageURL];
     }
     return self;
 }
