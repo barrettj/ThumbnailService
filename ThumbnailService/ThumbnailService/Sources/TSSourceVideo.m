@@ -8,6 +8,7 @@
 
 #import "TSSourceVideo.h"
 #import "UIImageView+ImageFrame.h"
+#import "NSString+MD5.h"
 
 @implementation TSSourceVideo {
     NSString *identifier;
@@ -15,6 +16,19 @@
     CGFloat thumbnailSecond;
     AVURLAsset *_videoAsset;
 }
+
++ (NSString*)identifierForURL:(NSURL*)videoURL atSecond:(CGFloat)second {
+    static NSString *pathToReplace;
+    
+    if (!pathToReplace) {
+        pathToReplace = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)[0]stringByDeletingLastPathComponent];
+    }
+    
+    NSString *variablePath = [[videoURL absoluteString] stringByReplacingOccurrencesOfString:pathToReplace withString:@"/"];
+    
+    return [NSString stringWithFormat:@"%@-%g", [variablePath MD5Digest], second];
+}
+
 
 - (id)initWithVideoFilePath:(NSString *)filePath thumbnailSecond:(CGFloat)second
 {
@@ -28,7 +42,7 @@
     if (self) {
         thumbnailSecond = second;
         videoURL = url;
-        identifier = [NSString stringWithFormat:@"%d-%g", (unsigned int)[[videoURL absoluteString] hash], second];
+        identifier = [self.class identifierForURL:videoURL atSecond:second];
     }
     return self;
 }

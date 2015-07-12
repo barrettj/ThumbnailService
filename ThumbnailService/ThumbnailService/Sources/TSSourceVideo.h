@@ -15,4 +15,6 @@
 
 - (double)videoDuration;
 
++ (NSString*)identifierForURL:(NSURL*)videoURL atSecond:(CGFloat)second;
+
 @end
